@@ -1,11 +1,17 @@
 {
-  "name": "flightchooser",
+  "name": "itinerary-compare",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "node -r esm index.js",
+    "docker-build": "docker build . -t itinerary:latest",
+    "docker-run": "docker run -it itinerary:latest"
   },
   "author": "alex nigro",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "esm": "^3.2.25"
+  }
 }
