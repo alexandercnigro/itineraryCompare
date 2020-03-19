@@ -1,0 +1,1 @@
+export default function exists(item){ return (item !== undefined && item !== null)}
