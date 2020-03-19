@@ -1,23 +1,23 @@
-import flightGroups from '../utils/flightGroups';
-import InvalidFlightGroupError from './InvalidFlightGroupError';
-
+import InvalidHopNumberError from "./InvalidHopNumberError";
+import exists from '../utils/checkExists';
+import getId from '../utils/idCreator';
 export default class Flight {
-    constructor(flightInfoObject) {
+    constructor(flightInfoObject, maxHopNum) {
+        this.dateLeaving = flightInfoObject["dateLeaving"];
+        this.start = flightInfoObject["start"];
+        this.destination = flightInfoObject["destination"];
         this.departureTime = flightInfoObject["departureTime"];
         this.arrivalTime = flightInfoObject["arrivalTime"];
         this.duration = flightInfoObject["duration"];
-        this.cost = flightInfoObject["cost"];
+        this.price = flightInfoObject["pricePerPerson"];
         this.airline = flightInfoObject["airline"];
         this.notes = flightInfoObject["notes"];
-        this.flightGroup = flightInfoObject["flightGroup"];
-        if (!(this.isValidFlightGroup())) throw new InvalidFlightGroupError(this.flightGroup);
-    }
+        this.hopNumber = parseInt(flightInfoObject["hopNumber"]);
+        
+        if (exists(maxHopNum) && (this.hopNumber > maxHopNum || this.hopNumber < 1)){
+            throw new InvalidHopNumberError(this.hopNumber, maxHopNum);
+        }  
 
-    isValidFlightGroup(){
-        let result = false;
-        Object.values(flightGroups).forEach(group => {
-            if (this.flightGroup === group) result=true;
-        })
-        return result;
+        this.id = getId();
     }
 }
